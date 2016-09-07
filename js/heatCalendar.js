@@ -1,15 +1,9 @@
 var width = 960,
-    cellSize = 10, // 17 cell size
+    cellSize = 17, // 17 cell size
     height = cellSize * 7 + 5; // 136,
 
 var percent = d3.format(".1%"),
     format = d3.time.format("%Y-%m-%d");
-
-var color = d3.scale.quantize()
-    .domain([-0.05, 0.05])
-    .range(d3.range(11).map(function (d) {
-        return "q" + d + "-11";
-    }));
 
 var svg = d3.select("body").selectAll("svg")
     .data(d3.range(2003, 2009))
@@ -56,7 +50,6 @@ svg.selectAll(".month")
     .attr("class", "month")
     .attr("d", monthPath);
 
-
 function monthPath(t0) {
     var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
         d0 = t0.getDay(),
@@ -66,7 +59,7 @@ function monthPath(t0) {
     return "M" + (w0 + 1) * cellSize + "," + d0 * cellSize + "H" + w0 * cellSize + "V" + 7 * cellSize + "H" + w1 * cellSize + "V" + (d1 + 1) * cellSize + "H" + (w1 + 1) * cellSize + "V" + 0 + "H" + (w0 + 1) * cellSize + "Z";
 }
 
-d3.csv("data/fligths-DateCancelled.csv", function (error, csv) {
+d3.csv("data/fligths-DateCancelled.csv", function (error, csvdata) {
     if (error) {
         throw error;
     }
@@ -76,9 +69,23 @@ d3.csv("data/fligths-DateCancelled.csv", function (error, csv) {
             return d.Date;
         })
         .rollup(function (d) {
-            return d[0].Cancelled_avg;
+            return d[0].Cancelled_avg
         })
-        .map(csv);
+        .map(csvdata);
+
+    var attendance_max = d3.max(csvdata, function (d) {
+        return +d.Cancelled_avg;
+    });
+
+    var attendance_min = d3.min(csvdata, function (d) {
+        return +d.Cancelled_avg;
+    });
+
+    var color = d3.scale.quantize()
+        .domain([attendance_min, attendance_max])
+        .range(d3.range(11).map(function (d) {
+            return "q" + ( 10 - d ) + "-11";
+        }));
 
     rect.filter(function (d) {
             return d in data;
@@ -90,4 +97,6 @@ d3.csv("data/fligths-DateCancelled.csv", function (error, csv) {
         .text(function (d) {
             return d + ": " + percent(data[d]);
         });
+    
+        debugger;
 });
