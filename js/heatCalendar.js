@@ -69,7 +69,7 @@ function plot_CalHeat(error, csvdata) {
         throw error;
     }
 
-    var cellSize = 17;
+    var cellSize = 12;
 
     var rect = getRect(cellSize);
 
@@ -82,16 +82,16 @@ function plot_CalHeat(error, csvdata) {
         })
         .map(csvdata);
 
-    var attendance_max = d3.max(csvdata, function (d) {
+    var value_max = d3.max(csvdata, function (d) {
         return +d.Cancelled_avg;
     });
 
-    var attendance_min = d3.min(csvdata, function (d) {
+    var value_min = d3.min(csvdata, function (d) {
         return +d.Cancelled_avg;
     });
 
     var color = d3.scale.quantize()
-        .domain([attendance_min, attendance_max])
+        .domain([value_min, value_max])
         .range(d3.range(11).map(function (d) {
             return "q" + (10 - d) + "-11";
         }));
