@@ -1,6 +1,6 @@
 var width = 960,
-    height = 136,
-    cellSize = 17; // cell size
+    cellSize = 10, // 17 cell size
+    height = cellSize * 7 + 5; // 136,
 
 var percent = d3.format(".1%"),
     format = d3.time.format("%Y-%m-%d");
@@ -12,7 +12,7 @@ var color = d3.scale.quantize()
     }));
 
 var svg = d3.select("body").selectAll("svg")
-    .data(d3.range(2004, 2006))
+    .data(d3.range(2003, 2009))
     .enter().append("svg")
     .attr("width", width)
     .attr("height", height)
