@@ -16,8 +16,9 @@ function getRect(cellSize) {
     var percent = d3.format(".1%"),
         format = d3.time.format("%Y-%m-%d");
 
-    var svg = d3.select("body").selectAll("svg")
-        .data(d3.range(2003, 2009))
+    var svg = d3.select("body").selectAll("#cancellation")
+        .selectAll("svg")
+        .data(d3.range(2004, 2008))
         .enter().append("svg")
         .attr("width", width)
         .attr("height", height)
