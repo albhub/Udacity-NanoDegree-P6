@@ -13,10 +13,13 @@ example [1992](http://stat-computing.org/dataexpo/2009/1992.csv.bz2)
 
 
 # Narrative:
- 
+
++ Presentation of data
 + Cancellation by day
 
 
 # Sources:
 
 [1] Calendar view :: http://bl.ocks.org/mbostock/40633180
+[2] Presentation  :: http://mbostock.github.io/d3/talk/20111116/#0
+
