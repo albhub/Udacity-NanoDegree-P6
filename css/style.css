@@ -1,59 +1,130 @@
 body {
+    font: 300 36px "Helvetica Neue";
+    height: 640px;
+    margin: 80px 160px 80px 160px;
+    overflow: hidden;
+    position: relative;
+    width: 960px;
+}
+
+a:link,
+a:visited {
+    color: #777;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #666;
+}
+
+blockquote {
+    margin: 0;
+}
+
+blockquote:before {
+    content: "“";
+    position: absolute;
+    left: -.4em;
+}
+
+blockquote:after {
+    content: "”";
+    position: absolute;
+}
+
+body > ul {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 64px;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: inherit;
+    margin: 0;
+}
+
+h2,
+h3 {
+    text-align: right;
+    font-size: inherit;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+h2 {
+    font-size: 24px;
+    position: absolute;
+}
+
+h3 {
+    bottom: -20px;
+    font-size: 18px;
+}
+
+.invert {
+    background: #1f1f1f;
+    color: #dcdccc;
+}
+
+.invert h2,
+.invert h3 {
+    color: #7f9f7f;
+}
+
+.string,
+.regexp {
+    color: #f39;
+}
+
+.keyword {
+    color: #00c;
+}
+
+.comment {
+    color: #777;
+    font-style: oblique;
+}
+
+.number {
+    color: #369;
+}
+
+.class,
+.special {
+    color: #1181B8;
+}
+
+body > svg {
+    position: absolute;
+    top: -80px;
+    left: -160px;
+}
+
+.bar {
+    fill: steelblue;
+}
+
+.bar:hover {
+    fill: brown;
+}
+
+.axis {
     font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
     shape-rendering: crispEdges;
 }
 
-.day {
-    fill: #fff;
-    stroke: #ccc;
-}
-
-.month {
-    fill: none;
-    stroke: #000;
-    stroke-width: 2px;
-}
-
-.RdYlGn .q0-11 {
-    fill: rgb(165, 0, 38)
-}
-
-.RdYlGn .q1-11 {
-    fill: rgb(215, 48, 39)
-}
-
-.RdYlGn .q2-11 {
-    fill: rgb(244, 109, 67)
-}
-
-.RdYlGn .q3-11 {
-    fill: rgb(253, 174, 97)
-}
-
-.RdYlGn .q4-11 {
-    fill: rgb(254, 224, 139)
-}
-
-.RdYlGn .q5-11 {
-    fill: rgb(255, 255, 191)
-}
-
-.RdYlGn .q6-11 {
-    fill: rgb(217, 239, 139)
-}
-
-.RdYlGn .q7-11 {
-    fill: rgb(166, 217, 106)
-}
-
-.RdYlGn .q8-11 {
-    fill: rgb(102, 189, 99)
-}
-
-.RdYlGn .q9-11 {
-    fill: rgb(26, 152, 80)
-}
-
-.RdYlGn .q10-11 {
-    fill: rgb(0, 104, 55)
+.x.axis path {
+    display: none;
 }
