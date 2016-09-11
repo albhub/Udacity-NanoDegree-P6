@@ -7,6 +7,10 @@
 </head>
 
 <body>
+    <blockquote style="font-size:40px;">
+        The number of US domestic flights have increased (almost) continuosly from 1988 to 2008 ... 
+    </blockquote>
+    <div class="graph"></div>
     <h2>
       U.S. commercial flights, 1997-2008<br>
       Number of flights per year
@@ -15,9 +19,9 @@
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script>
         var margin = {
-                top: 80,
-                right: 20,
-                bottom: 30,
+                top: 100,
+                right: 100,
+                bottom: 100,
                 left: 100
             },
             width = 960 - margin.left - margin.right,
@@ -36,9 +40,9 @@
         var yAxis = d3.svg.axis()
             .scale(y)
             .orient("left");
-            //.ticks(10, "%");
+        //.ticks(10, "%");
 
-        var svg = d3.select("body").append("svg")
+        var svg = d3.select(".graph").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
@@ -50,15 +54,12 @@
             x.domain(data.map(function (d) {
                 return d.Year;
             }));
-            y.domain([
-                      d3.min(data, function (d) {
-                return +d.Value;
-            }),
+            y.domain([0,
                       d3.max(data, function (d) {
-                return +d.Value;
-            })
+                    return +d.Value;
+                })
                      ]);
-             
+
             svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")

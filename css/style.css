@@ -22,13 +22,13 @@ blockquote {
 }
 
 blockquote:before {
-    content: "“";
+    content: "";
     position: absolute;
     left: -.4em;
 }
 
 blockquote:after {
-    content: "”";
+    content: "";
     position: absolute;
 }
 
