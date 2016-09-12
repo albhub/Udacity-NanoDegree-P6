@@ -7,8 +7,10 @@
 </head>
 
 <body>
-    <blockquote style="font-size:40px;">
-        ... with a moderate improvement on the percentage of flights "on time".
+    <blockquote style="font-size:30px;">
+        ... altought this increment the percentage of flights "on time" have increased, 
+        but in the last reported years have dropped 
+        from a <color class="number"> 62%</color> in 2003 to a <color class="number"> 57%</color> in 2008.
     </blockquote>
     <div class="graph"></div>
     <h2>
@@ -17,12 +19,14 @@
     </h2>
     <div class="bars"></div>
     <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
     <script>
         var margin = {
-                top: 100,
+                top: 20,
                 right: 100,
                 bottom: 100,
-                left: 100
+                left: 80
             },
             width = 960 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
@@ -47,6 +51,15 @@
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-margin.bottom, -margin.left-margin.right+0.5*width/21])
+            .html(function (d) {
+                return "<strong> Year " + d.Year +"</strong>: <span style='color:darkcyan'>" + parseFloat(Math.round(d.Value * 100)).toFixed(0) + "% </span>";
+            })
+        
+        svg.call(tip);
 
         d3.csv("data/02-Year_FlightsOnTime.csv", type, function (error, data) {
             if (error) throw error;
@@ -85,7 +98,9 @@
                 })
                 .attr("height", function (d) {
                     return height - y(d.Value);
-                });
+                })
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide);
         });
 
         function type(d) {

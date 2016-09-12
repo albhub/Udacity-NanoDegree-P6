@@ -12,10 +12,11 @@
       U.S. commercial flights, 1987-2008<br>
       Number of flights per year
     </h2>
-    <blockquote style="font-size:35px;">
-        From 2003 exists detailed data:
-        <li> The Security is relatively faster ... </li>
-        <li> but the delays by Late Aircraft causes have increased.</li>
+    <blockquote style="font-size:30px;">
+        From 2003 to 2008 exists detailed data:
+        <li> The security, weather and carrier shares were stable</li>
+        <li> The <font color="#6b486b"> NAS </font> causes (non-extreme weather conditions, airport operations, heavy traffic volume, air traffic control, etc.) share have been reduced  ... </li>
+        <li> but the share of the delays by <font color="#d0743c"> Late Aircraft</font> causes have increased.</li>
     </blockquote>
     <div class="graph">
     </div>
@@ -39,7 +40,9 @@
             .range([height, 0]);
 
         var color = d3.scale.ordinal()
-            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+            .range(["#98abc5", "#7b6888", "#6b486b", "#d0743c", "#ff8c00"]);
+
+            //.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
         var xAxis = d3.svg.axis()
             .scale(x0)

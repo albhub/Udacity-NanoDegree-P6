@@ -8,7 +8,7 @@
 
 <body>
     <blockquote style="font-size:40px;">
-        The number of US domestic flights have increased (almost) continuosly from 1988 to 2008 ... 
+        The number of US domestic flights have increased (almost) continuosly from 1988 to 2008 ...
     </blockquote>
     <div class="graph"></div>
     <h2>
@@ -17,6 +17,7 @@
     </h2>
     <div class="bars"></div>
     <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <script>
         var margin = {
                 top: 100,
@@ -47,6 +48,14 @@
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-margin.bottom, -margin.left - margin.right + width / 20])
+            .html(function (d) {
+                return "<strong> Year " + d.Year + "</strong>: <span style='color:darkcyan'>" + parseFloat((d.Value / 1000000)).toFixed(2) + " million flights </span>";
+            })
+
+        svg.call(tip);
         d3.csv("data/01-Year_NFlights.csv", type, function (error, data) {
             if (error) throw error;
 
@@ -87,7 +96,9 @@
                 })
                 .attr("height", function (d) {
                     return height - y(d.Value);
-                });
+                })
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide);;
         });
 
         function type(d) {
