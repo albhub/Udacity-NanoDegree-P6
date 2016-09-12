@@ -12,15 +12,19 @@
       U.S. commercial flights, 1987-2008<br>
       Number of flights per year
     </h2>
-    <blockquote style="font-size:30px;">
-        From 2003 to 2008 exists detailed data:
-        <li> The security, weather and carrier shares were stable</li>
-        <li> The <font color="#6b486b"> NAS </font> causes (non-extreme weather conditions, airport operations, heavy traffic volume, air traffic control, etc.) share have been reduced  ... </li>
+    <blockquote style="font-size:25px;">
+        From <number>2003</number> to <number>2008</number> exists the data provides the delay causes:
+        <li> The share 
+            <font color="#d0743c"> security </font>, 
+            <font color="#7b6888"> weather </font> and 
+            <font color="#98abc5"> carrier </font>  as delay causes  have been stable</li>
+        <li> The <font color="#6b486b"> NAS </font> causes (non-extreme weather conditions, airport operations, heavy traffic volume, air traffic control, etc.) share have been reduced ... </li>
         <li> but the share of the delays by <font color="#d0743c"> Late Aircraft</font> causes have increased.</li>
     </blockquote>
     <div class="graph">
     </div>
     <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <script>
         var margin = {
                 top: 20,
@@ -42,7 +46,7 @@
         var color = d3.scale.ordinal()
             .range(["#98abc5", "#7b6888", "#6b486b", "#d0743c", "#ff8c00"]);
 
-            //.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+        //.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
         var xAxis = d3.svg.axis()
             .scale(x0)
@@ -61,6 +65,16 @@
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-3*margin.bottom, -  1 * (width + margin.left + margin.right) / 5])
+            //.offset([ -margin.bottom, -200 + ( width + margin.left + margin.right ) / 30])
+            .html(function (d) {
+                //              debugger;
+                return "<span style='color:" + color(0) + "'> " + d.name + " " +  parseFloat((d.value * 100)).toFixed(2) + " % </span>";
+            })
+
+        svg.call(tip);
         d3.csv("data/03-Year_FlightsDelayCauses.csv", function (error, data) {
             if (error) throw error;
 
@@ -127,7 +141,9 @@
                 })
                 .style("fill", function (d) {
                     return color(d.name);
-                });
+                })
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide);
 
             var legend = svg.selectAll(".legend")
                 .data(ageNames.slice().reverse())
@@ -153,7 +169,6 @@
                 });
 
         });
-    </script>
     </script>
 
 </body>
