@@ -18,6 +18,7 @@ a:hover {
 }
 
 blockquote {
+    font-size: 40px;
     margin: 0;
 }
 
@@ -91,6 +92,12 @@ h3 {
     font-style: oblique;
 }
 
+.legend {
+    font: inherit;
+    color: coral;
+    font-style: oblique;
+    font: 10px sans-serif;
+}
 .number {
     color: #369;
 }
@@ -111,7 +118,7 @@ body > svg {
 }
 
 .bar:hover {
-    fill: brown;
+    fill:  darkcyan;
 }
 
 .axis {
