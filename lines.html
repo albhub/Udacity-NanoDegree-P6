@@ -26,7 +26,7 @@
         Late carrier delay:
     </blockquote>
     <div id="grapha" style="height: 200px; position: relative;">
-        <svg width="960" height="400"></svg>
+        <svg width="960" height="200px"></svg>
     </div>
     <blockquote style="font-size:25px;">
         Total delay:
@@ -45,7 +45,7 @@
         var svg = d3.select("#grapha svg"),
             margin = {
                 top: 20,
-                right: 80,
+                right: 240,
                 bottom: 30,
                 left: 50
             },
@@ -54,12 +54,6 @@
             g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         var svf = d3.select("#graphb svg"),
-            margin = {
-                top: 20,
-                right: 80,
-                bottom: 30,
-                left: 50
-            },
             width = svf.attr("width") - margin.left - margin.right,
             height = svf.attr("height") - margin.top - margin.bottom,
             f = svf.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -80,6 +74,17 @@
                 return y(d.delay);
             });
 
+        function clstr(name) {
+            //string illegal = "\"M\"\\a/ry/ h**ad:>> a\\/:*?\"| li*tt|le|| la\"mb.?";
+            //var regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+            //Regex r = new Regex(string.Format("[{0}]", Regex.Escape(regexSearch)));
+            var newname = name.replace(/([\.:])/g, "\\$1")
+                .replace(/\s/g, '')
+                .replace("\\.", "");
+            console.warn(newname);
+            return "cn" + newname; //r.Replace(name, "");
+
+        }
         //        d3.tsv("data.tsv", type, function (error, data) {
 
         d3.csv("data/05-DelayAircraftCarrier.csv", type, function (error, data) {
@@ -144,19 +149,31 @@
                     return line(d.values);
                 })
                 .style("stroke", function (d) {
-                    return z(d.id);
-                }).on("mouseover", function () {
-                    var sel = d3.select(this)
-                        .style("stroke", function (d) {
-                            return z(d.id);
-                        });
-                    this.parentNode.parentNode.appendChild(this.parentNode);
+                    return "lightgrey"; //z(d.id);
                 })
-                .on("mouseout", function (d) {
-                    d3.select(this)
+                .on("mouseover", function (d) {
+                 d3.selectAll("#path-" + clstr(d.id))
                         .transition()
                         .duration(750)
-                        .style("stroke", "lightgrey")
+                        .style("stoke-width", 1)
+                        .style("stroke", z(d.id));
+                   
+                    d3.selectAll("#text-" + clstr(d.id))
+                        .style("fill", z(d.id))
+                        .style("font", "14px sans-serif");
+                })
+                .on("mouseout", function (d) {
+                    d3.selectAll("#path-" + clstr(d.id))
+                        .transition()
+                        .duration(750)
+                        .style("stoke-width", 1)
+                        .style("stroke", "lightgrey");
+                    d3.selectAll("#text-" + clstr(d.id))
+                        .style("fill", "lightgrey")
+                        .style("font", "10px sans-serif");
+                })
+                .attr("id", function (d, i) {
+                    return "path-" + clstr(d.id);
                 });
 
             city.append("text")
@@ -176,9 +193,36 @@
                     return d.id;
                 })
                 .style("fill", function (d) {
-                    return z(d.id);
+                    return "lightgrey";
+                })
+                .on("mouseover", function (d) {
+                    d3.selectAll("#path-" + clstr(d.id))
+                        .style("stoke", function (d) {
+                            return z(d.id);
+                        });
+                    d3.selectAll("#text-" + clstr(d.id))
+                        .style("fill", function (d) {
+                            return z(d.id);
+                        })
+                        .style("font", "14px sans-serif");;
+                })
+                .on("mouseout", function (d) {
+                    d3.selectAll("#path-" + clstr(d.id))
+                        .style("stoke", function (d) {
+                            return "lightgrey";
+                        });
+                    d3.selectAll("#text-" + clstr(d.id))
+                        .style("fill", function (d) {
+                            return "lightgrey";
+                        })
+                        .style("font", "10px sans-serif");;
+                })
+                .attr("id", function (d, i) {
+                    return "text-" + clstr(d.id);
                 });
+
         });
+
 
         d3.csv("data/06-DelayTotalCarrier.csv", type, function (error, data) {
             if (error) throw error;
@@ -242,7 +286,10 @@
                     return line(d.values);
                 })
                 .style("stroke", function (d) {
-                    return z(d.id);
+                    return "lightgrey"; //z(d.id);
+                })
+                .attr("id", function (d, i) {
+                    return "path-" + clstr(d.id);
                 });
 
             city.append("text")
@@ -262,7 +309,10 @@
                     return d.id;
                 })
                 .style("fill", function (d) {
-                    return z(d.id);
+                    return "lightgrey"; //z(d.id);
+                })
+                .attr("id", function (d, i) {
+                    return "text-" + clstr(d.id);
                 });
         });
 
