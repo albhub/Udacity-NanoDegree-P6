@@ -19,20 +19,20 @@
 
 <body>
     <blockquote style="font-size:25px;">
-        The use (data extended to 2010):
+        The carriers "late aircraft" delay have great importance in the "total delay". It's up to the carriers to correct this delay cause to provide a better service.
     </blockquote>
     </br>
     <blockquote style="font-size:25px;">
         Late carrier delay:
     </blockquote>
-    <div id="grapha" style="height: 170px; position: relative;">
-        <svg width="960" height="170"></svg>
+    <div id="grapha" style="height: 200px; position: relative;">
+        <svg width="960" height="400"></svg>
     </div>
     <blockquote style="font-size:25px;">
         Total delay:
     </blockquote>
-    <div id="graphb" style="height: 170px; position: relative;">
-        <svg width="960" height="170"></svg>
+    <div id="graphb" style="height: 200px; position: relative;">
+        <svg width="960" height="200"></svg>
     </div>
     <h2>
       U.S. commercial flights, 2003-2008<br>
@@ -145,6 +145,18 @@
                 })
                 .style("stroke", function (d) {
                     return z(d.id);
+                }).on("mouseover", function () {
+                    var sel = d3.select(this)
+                        .style("stroke", function (d) {
+                            return z(d.id);
+                        });
+                    this.parentNode.parentNode.appendChild(this.parentNode);
+                })
+                .on("mouseout", function (d) {
+                    d3.select(this)
+                        .transition()
+                        .duration(750)
+                        .style("stroke", "lightgrey")
                 });
 
             city.append("text")
