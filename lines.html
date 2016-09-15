@@ -152,15 +152,16 @@
                     return "lightgrey"; //z(d.id);
                 })
                 .on("mouseover", function (d) {
-                 d3.selectAll("#path-" + clstr(d.id))
+                    d3.selectAll("#path-" + clstr(d.id))
                         .transition()
                         .duration(750)
                         .style("stoke-width", 1)
                         .style("stroke", z(d.id));
-                   
+
                     d3.selectAll("#text-" + clstr(d.id))
                         .style("fill", z(d.id))
-                        .style("font", "14px sans-serif");
+                        .style("font", "14px sans-serif")
+                        .style("z-index", "999");
                 })
                 .on("mouseout", function (d) {
                     d3.selectAll("#path-" + clstr(d.id))
@@ -170,7 +171,8 @@
                         .style("stroke", "lightgrey");
                     d3.selectAll("#text-" + clstr(d.id))
                         .style("fill", "lightgrey")
-                        .style("font", "10px sans-serif");
+                        .style("font", "10px sans-serif")
+                        .style("z-index", "-1");
                 })
                 .attr("id", function (d, i) {
                     return "path-" + clstr(d.id);
@@ -204,7 +206,9 @@
                         .style("fill", function (d) {
                             return z(d.id);
                         })
-                        .style("font", "14px sans-serif");;
+                        .style("font", "14px sans-serif") 
+                        .style("position", "absolute")
+                        .style("z-index", "10000000000");
                 })
                 .on("mouseout", function (d) {
                     d3.selectAll("#path-" + clstr(d.id))
@@ -215,7 +219,9 @@
                         .style("fill", function (d) {
                             return "lightgrey";
                         })
-                        .style("font", "10px sans-serif");;
+                        .style("font", "10px sans-serif")
+                        .style("position", "absolute")
+                        .style("z-index", "10");
                 })
                 .attr("id", function (d, i) {
                     return "text-" + clstr(d.id);
@@ -280,6 +286,7 @@
                 .enter().append("g")
                 .attr("class", "city");
 
+
             city.append("path")
                 .attr("class", "line")
                 .attr("d", function (d) {
@@ -287,6 +294,30 @@
                 })
                 .style("stroke", function (d) {
                     return "lightgrey"; //z(d.id);
+                })
+                .on("mouseover", function (d) {
+                    d3.selectAll("#path-" + clstr(d.id))
+                        .transition()
+                        .duration(750)
+                        .style("stoke-width", 1)
+                        .style("stroke", z(d.id))
+                    .style("z-index", "9999");
+
+                    d3.selectAll("#text-" + clstr(d.id))
+                        .style("fill", z(d.id))
+                        .style("font", "14px sans-serif")
+                        .style("z-index", "10");
+                })
+                .on("mouseout", function (d) {
+                    d3.selectAll("#path-" + clstr(d.id))
+                        .transition()
+                        .duration(750)
+                        .style("stoke-width", 1)
+                        .style("stroke", "lightgrey")
+                    .style("z-index", "9999");;
+                    d3.selectAll("#text-" + clstr(d.id))
+                        .style("fill", "lightgrey")
+                        .style("font", "10px sans-serif").style("z-index", "10");;
                 })
                 .attr("id", function (d, i) {
                     return "path-" + clstr(d.id);
@@ -309,11 +340,39 @@
                     return d.id;
                 })
                 .style("fill", function (d) {
-                    return "lightgrey"; //z(d.id);
+                    return "lightgrey";
+                })
+                .on("mouseover", function (d) {
+                    d3.selectAll("#path-" + clstr(d.id))
+                        .style("stoke", function (d) {
+                            return z(d.id);
+                        });
+                    d3.selectAll("#text-" + clstr(d.id))
+                        .style("fill", function (d) {
+                            return z(d.id);
+                        })
+                        .style("font", "14px sans-serif")
+                        .style("z-index", "9999");
+                })
+                .on("mouseout", function (d) {
+                    d3.selectAll("#path-" + clstr(d.id))
+                        .style("stoke", function (d) {
+                            return "lightgrey";
+                        });
+                    d3.selectAll("#text-" + clstr(d.id))
+                        .style("fill", function (d) {
+                            return "lightgrey";
+                        })
+                        .style("font", "10px sans-serif")
+                        .style("z-index", "-1");
                 })
                 .attr("id", function (d, i) {
                     return "text-" + clstr(d.id);
                 });
+
+
+
+
         });
 
         function type(d, _, columns) {
