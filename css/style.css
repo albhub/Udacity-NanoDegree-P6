@@ -204,6 +204,10 @@ body > svg {
     font-size: 18px;
 }
 
+.ppexplanation {
+    font: 25px sans-serif;
+}
+
 .clate {
      font-weight: bold;
     font-size: 20px;
