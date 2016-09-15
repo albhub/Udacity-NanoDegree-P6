@@ -17,6 +17,8 @@ a:hover {
     color: #666;
 }
 
+
+
 blockquote {
     font-size: 40px;
     margin: 0;
@@ -83,6 +85,18 @@ h3 {
     color: #f39;
 }
 
+.ptitle {
+    color: #777;
+    font-style: oblique;
+    font: 35px sans-serif;
+}
+
+.title {
+    color: #1f1f1f;
+    font-style: oblique;
+    font: 50px sans-serif;
+}
+
 .keyword {
     color: #00c;
 }
@@ -147,7 +161,9 @@ body > svg {
     border-radius: 2px;
 }
 
+
 /* Creates a small triangle extender for the tooltip */
+
 .d3-tip:after {
     box-sizing: border-box;
     display: inline;
@@ -162,6 +178,7 @@ body > svg {
 
 
 /* Style northward tooltips differently */
+
 .d3-tip.n:after {
     margin: -1px 0 0 0;
     top: 100%;
@@ -169,9 +186,9 @@ body > svg {
 }
 
 #graph {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
