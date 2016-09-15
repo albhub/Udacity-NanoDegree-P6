@@ -17,8 +17,6 @@ a:hover {
     color: #666;
 }
 
-
-
 blockquote {
     font-size: 40px;
     margin: 0;
@@ -191,4 +189,44 @@ body > svg {
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.explanation {
+    font: inherit;
+    font-size: 18px;
+}
+
+.clate {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #ff8c00;
+}
+
+.csecu {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #d0743c;
+}
+
+.cweat {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #7b6888;
+}
+
+.ccarr {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #98abc5;
+}
+
+.cnasx {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #6b486b;
 }
