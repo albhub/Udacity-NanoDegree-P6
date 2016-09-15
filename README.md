@@ -16,6 +16,9 @@ example [1992](http://stat-computing.org/dataexpo/2009/1992.csv.bz2)
 
 + Presentation of data
 + Cancellation by day
++ Delay by cause and day 
++ Airline performances
+End.
 
 
 # Sources:
