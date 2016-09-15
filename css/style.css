@@ -18,6 +18,7 @@ a:hover {
 }
 
 blockquote {
+    font-size: 40px;
     margin: 0;
 }
 
@@ -82,6 +83,26 @@ h3 {
     color: #f39;
 }
 
+
+
+.title {
+    color: #1f1f1f;
+    font-style: oblique;
+    font: 50px sans-serif;
+}
+
+.ptitle {
+    color: #777;
+    font-style: oblique;
+    font: 35px sans-serif;
+}
+
+.pptitle {
+    color: #777;
+    font-style: oblique;
+    font: 20px sans-serif;
+}
+
 .keyword {
     color: #00c;
 }
@@ -89,6 +110,13 @@ h3 {
 .comment {
     color: #777;
     font-style: oblique;
+}
+
+.legend {
+    font: inherit;
+    color: coral;
+    font-style: oblique;
+    font: 10px sans-serif;
 }
 
 .number {
@@ -111,7 +139,7 @@ body > svg {
 }
 
 .bar:hover {
-    fill: brown;
+    fill: darkcyan;
 }
 
 .axis {
@@ -127,4 +155,90 @@ body > svg {
 
 .x.axis path {
     display: none;
+}
+
+.d3-tip {
+    font-size: 14px;
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+}
+
+
+/* Creates a small triangle extender for the tooltip */
+
+.d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+}
+
+
+/* Style northward tooltips differently */
+
+.d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+}
+
+#graph {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.explanation {
+    font: inherit;
+    font-size: 18px;
+}
+
+.ppexplanation {
+    font: 25px sans-serif;
+}
+
+.clate {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #ff8c00;
+}
+
+.csecu {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #d0743c;
+}
+
+.cweat {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #7b6888;
+}
+
+.ccarr {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #98abc5;
+}
+
+.cnasx {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #6b486b;
 }
