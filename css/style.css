@@ -83,16 +83,24 @@ h3 {
     color: #f39;
 }
 
+
+
+.title {
+    color: #1f1f1f;
+    font-style: oblique;
+    font: 50px sans-serif;
+}
+
 .ptitle {
     color: #777;
     font-style: oblique;
     font: 35px sans-serif;
 }
 
-.title {
-    color: #1f1f1f;
+.pptitle {
+    color: #777;
     font-style: oblique;
-    font: 50px sans-serif;
+    font: 20px sans-serif;
 }
 
 .keyword {

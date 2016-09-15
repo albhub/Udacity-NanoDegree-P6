@@ -18,37 +18,36 @@
 </head>
 
 <body>
-    <blockquote style="font-size:25px;">
-        The carriers "late aircraft" delay have great importance in the "total delay". It's up to the carriers to correct this delay cause to provide a better service.
-    </blockquote>
-    </br>
-    <blockquote style="font-size:25px;">
-        Late carrier delay:
-    </blockquote>
-    <div id="grapha" style="height: 200px; position: relative;">
-        <svg width="960" height="200px"></svg>
-    </div>
-    <blockquote style="font-size:25px;">
-        Total delay:
-    </blockquote>
-    <div id="graphb" style="height: 200px; position: relative;">
-        <svg width="960" height="200"></svg>
-    </div>
     <h2>
       U.S. commercial flights, 2003-2008<br>
-      Delays
+      Delays improvement. Late Aircraft &amp; Total Delay.
     </h2>
+    <p>
+        ... the <font class="keyword">airlines</font> that have reduced their
+        <font class="clate"> Late Aircraft</font> delays have improved their "on time" ratios.
+    </p>
+
+    <div class="pptitle" id="grapha" style="height: 220px; position: relative;">
+        Late carrier delay:
+        <svg width="960" height="180px"></svg>
+    </div>
+    <div class="pptitle" id="graphb" style="height: 220px; position: relative;">
+        Total delay:
+        <svg width="960" height="180"></svg>
+    </div>
+
 
 
     <script src="//d3js.org/d3.v4.min.js"></script>
     <script>
+        var margin = {
+            top: 20,
+            right: 240,
+            bottom: 30,
+            left: 50
+        };
+
         var svg = d3.select("#grapha svg"),
-            margin = {
-                top: 20,
-                right: 240,
-                bottom: 30,
-                left: 50
-            },
             width = svg.attr("width") - margin.left - margin.right,
             height = svg.attr("height") - margin.top - margin.bottom,
             g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -57,7 +56,6 @@
             width = svf.attr("width") - margin.left - margin.right,
             height = svf.attr("height") - margin.top - margin.bottom,
             f = svf.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
 
         var parseTime = d3.timeParse("%Y");
 
@@ -75,22 +73,19 @@
             });
 
         function clstr(name) {
-            //string illegal = "\"M\"\\a/ry/ h**ad:>> a\\/:*?\"| li*tt|le|| la\"mb.?";
-            //var regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
-            //Regex r = new Regex(string.Format("[{0}]", Regex.Escape(regexSearch)));
             var newname = name.replace(/([\.:])/g, "\\$1")
                 .replace(/\s/g, '')
                 .replace("\\.", "");
             console.warn(newname);
-            return "cn" + newname; //r.Replace(name, "");
+            return "cn" + newname;
 
         }
         //        d3.tsv("data.tsv", type, function (error, data) {
 
-        d3.csv("data/05-DelayAircraftCarrier.csv", type, function (error, data) {
+        function plotAirline(error, data, g) {
             if (error) throw error;
 
-            var cities = data.columns.slice(1).map(function (id) {
+            var airlines = data.columns.slice(1).map(function (id) {
                 return {
                     id: id,
                     values: data.map(function (d) {
@@ -107,19 +102,19 @@
             }));
 
             y.domain([
-                d3.min(cities, function (c) {
+                d3.min(airlines, function (c) {
                     return d3.min(c.values, function (d) {
                         return d.delay;
                     });
                 }),
-                    d3.max(cities, function (c) {
+                    d3.max(airlines, function (c) {
                     return d3.max(c.values, function (d) {
                         return d.delay;
                     });
                 })
   ]);
 
-            z.domain(cities.map(function (c) {
+            z.domain(airlines.map(function (c) {
                 return c.id;
             }));
 
@@ -138,12 +133,12 @@
                 .attr("fill", "#000")
                 .text("Late aircraft delay", "(rel year 2003)");
 
-            var city = g.selectAll(".city")
-                .data(cities)
+            var airline = g.selectAll(".airline")
+                .data(airlines)
                 .enter().append("g")
-                .attr("class", "city");
+                .attr("class", "airline");
 
-            city.append("path")
+            airline.append("path")
                 .attr("class", "line")
                 .attr("d", function (d) {
                     return line(d.values);
@@ -154,31 +149,34 @@
                 .on("mouseover", function (d) {
                     d3.selectAll("#path-" + clstr(d.id))
                         .transition()
-                        .duration(750)
-                        .style("stoke-width", 1)
+                        .duration(250)
+                        .style("stroke-width", 20)
                         .style("stroke", z(d.id));
 
                     d3.selectAll("#text-" + clstr(d.id))
+                        .transition()
+                        .duration(250)
                         .style("fill", z(d.id))
-                        .style("font", "14px sans-serif")
-                        .style("z-index", "999");
+                        .style("font", "14px sans-serif");
                 })
                 .on("mouseout", function (d) {
                     d3.selectAll("#path-" + clstr(d.id))
                         .transition()
-                        .duration(750)
-                        .style("stoke-width", 1)
+                        .duration(950)
+                        .style("stroke-width", 1)
                         .style("stroke", "lightgrey");
+
                     d3.selectAll("#text-" + clstr(d.id))
+                        .transition()
+                        .duration(950)
                         .style("fill", "lightgrey")
-                        .style("font", "10px sans-serif")
-                        .style("z-index", "-1");
+                        .style("font", "10px sans-serif");
                 })
                 .attr("id", function (d, i) {
                     return "path-" + clstr(d.id);
                 });
 
-            city.append("text")
+            airline.append("text")
                 .datum(function (d) {
                     return {
                         id: d.id,
@@ -197,183 +195,48 @@
                 .style("fill", function (d) {
                     return "lightgrey";
                 })
-                .on("mouseover", function (d) {
+             .on("mouseover", function (d) {
                     d3.selectAll("#path-" + clstr(d.id))
-                        .style("stoke", function (d) {
-                            return z(d.id);
-                        });
+                        .transition()
+                        .duration(250)
+                        .style("stroke-width", 10)
+                        .style("stroke", z(d.id));
+
                     d3.selectAll("#text-" + clstr(d.id))
-                        .style("fill", function (d) {
-                            return z(d.id);
-                        })
-                        .style("font", "14px sans-serif") 
-                        .style("position", "absolute")
-                        .style("z-index", "10000000000");
+                        .transition()
+                        .duration(250)
+                        .style("fill", z(d.id))
+                        .style("font", "14px sans-serif");
                 })
                 .on("mouseout", function (d) {
                     d3.selectAll("#path-" + clstr(d.id))
-                        .style("stoke", function (d) {
-                            return "lightgrey";
-                        });
+                        .transition()
+                        .duration(950)
+                        .style("stroke-width", 1)
+                        .style("stroke", "lightgrey");
+
                     d3.selectAll("#text-" + clstr(d.id))
-                        .style("fill", function (d) {
-                            return "lightgrey";
-                        })
-                        .style("font", "10px sans-serif")
-                        .style("position", "absolute")
-                        .style("z-index", "10");
+                        .transition()
+                        .duration(950)
+                        .style("fill", "lightgrey")
+                        .style("font", "10px sans-serif");
                 })
                 .attr("id", function (d, i) {
                     return "text-" + clstr(d.id);
                 });
 
-        });
-
-
-        d3.csv("data/06-DelayTotalCarrier.csv", type, function (error, data) {
-            if (error) throw error;
-
-            var cities = data.columns.slice(1).map(function (id) {
-                return {
-                    id: id,
-                    values: data.map(function (d) {
-                        return {
-                            date: d.date,
-                            delay: d[id]
-                        };
-                    })
-                };
+        };
+        d3.csv("data/05-DelayAircraftCarrier.csv", type,
+            function (error, data) {
+                if (error) throw error;
+                plotAirline(error, data, g);
             });
 
-            x.domain(d3.extent(data, function (d) {
-                return d.date;
-            }));
-
-            y.domain([
-                d3.min(cities, function (c) {
-                    return d3.min(c.values, function (d) {
-                        return d.delay;
-                    });
-                }),
-                    d3.max(cities, function (c) {
-                    return d3.max(c.values, function (d) {
-                        return d.delay;
-                    });
-                })
-  ]);
-
-            z.domain(cities.map(function (c) {
-                return c.id;
-            }));
-
-            f.append("g")
-                .attr("class", "axis axis--x")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x));
-
-            f.append("g")
-                .attr("class", "axis axis--y")
-                .call(d3.axisLeft(y))
-                .append("text")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 6)
-                .attr("dy", "0.71em")
-                .attr("fill", "#000")
-                .text("Delay", "(rel year 2003)");
-
-            var city = f.selectAll(".city")
-                .data(cities)
-                .enter().append("g")
-                .attr("class", "city");
-
-
-            city.append("path")
-                .attr("class", "line")
-                .attr("d", function (d) {
-                    return line(d.values);
-                })
-                .style("stroke", function (d) {
-                    return "lightgrey"; //z(d.id);
-                })
-                .on("mouseover", function (d) {
-                    d3.selectAll("#path-" + clstr(d.id))
-                        .transition()
-                        .duration(750)
-                        .style("stoke-width", 1)
-                        .style("stroke", z(d.id))
-                    .style("z-index", "9999");
-
-                    d3.selectAll("#text-" + clstr(d.id))
-                        .style("fill", z(d.id))
-                        .style("font", "14px sans-serif")
-                        .style("z-index", "10");
-                })
-                .on("mouseout", function (d) {
-                    d3.selectAll("#path-" + clstr(d.id))
-                        .transition()
-                        .duration(750)
-                        .style("stoke-width", 1)
-                        .style("stroke", "lightgrey")
-                    .style("z-index", "9999");;
-                    d3.selectAll("#text-" + clstr(d.id))
-                        .style("fill", "lightgrey")
-                        .style("font", "10px sans-serif").style("z-index", "10");;
-                })
-                .attr("id", function (d, i) {
-                    return "path-" + clstr(d.id);
-                });
-
-            city.append("text")
-                .datum(function (d) {
-                    return {
-                        id: d.id,
-                        value: d.values[d.values.length - 1]
-                    };
-                })
-                .attr("transform", function (d) {
-                    return "translate(" + x(d.value.date) + "," + y(d.value.delay) + ")";
-                })
-                .attr("x", 3)
-                .attr("dy", "0.35em")
-                .style("font", "10px sans-serif")
-                .text(function (d) {
-                    return d.id;
-                })
-                .style("fill", function (d) {
-                    return "lightgrey";
-                })
-                .on("mouseover", function (d) {
-                    d3.selectAll("#path-" + clstr(d.id))
-                        .style("stoke", function (d) {
-                            return z(d.id);
-                        });
-                    d3.selectAll("#text-" + clstr(d.id))
-                        .style("fill", function (d) {
-                            return z(d.id);
-                        })
-                        .style("font", "14px sans-serif")
-                        .style("z-index", "9999");
-                })
-                .on("mouseout", function (d) {
-                    d3.selectAll("#path-" + clstr(d.id))
-                        .style("stoke", function (d) {
-                            return "lightgrey";
-                        });
-                    d3.selectAll("#text-" + clstr(d.id))
-                        .style("fill", function (d) {
-                            return "lightgrey";
-                        })
-                        .style("font", "10px sans-serif")
-                        .style("z-index", "-1");
-                })
-                .attr("id", function (d, i) {
-                    return "text-" + clstr(d.id);
-                });
-
-
-
-
-        });
+        d3.csv("data/06-DelayTotalCarrier.csv", type,
+            function (error, data) {
+                if (error) throw error;
+                plotAirline(error, data, f);
+            });
 
         function type(d, _, columns) {
             d.date = parseTime(d.year);
