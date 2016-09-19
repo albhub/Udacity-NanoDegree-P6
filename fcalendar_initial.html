@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link type="text/css" rel="stylesheet" href="css/style_initial.css" />
+    <style type="text/css">
+        .year {
+            display: inline-block;
+        }
+        
+        svg {
+            font-size: 14px;
+            shape-rendering: crispEdges;
+        }
+        
+        .day {
+            fill: #fff;
+            stroke: #000;
+            stroke-opacity: .1;
+        }
+        
+        .month {
+            fill: none;
+            stroke: #000;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <blockquote style="font-size:30px;">
+        ... progressively the <font class="cnasx"> National Aviation System (NAS) </font> predominance (2003-2004) have transformed into a <font class="clate"> Late Aircraft</font> one (2007-2008), where the <font class="ccarr"> Carrier </font> cause acts as the third one in importance (data available from June 2003):
+    </blockquote>
+    <div id="graph" style="height: 340px; position: relative;"></div>
+    <blockquote style="font-size:30px;position: relative;">
+        The Airlines could improve their "on time" ratio removing the intrinsic causes (<font class="ccarr"> Carrier </font>) and avoiding the <font class="clate"> Late-arriving Aircraft</font> ... 
+    </blockquote>
+    <h2>
+      U.S. commercial flights, 2003-2008<br>
+      Main delay day by day.
+    </h2>
+
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript">
+        var m = [19, 20, 20, 19], // top right bottom left margin
+            w = 620 - m[1] - m[3], // width
+            h = 100 - m[0] - m[2], // height
+            z = 11; // cell size
+
+        var day = d3.time.format("%w"),
+            week = d3.time.format("%U"),
+            percent = d3.format(".1%"),
+            formatDate = d3.time.format("%Y-%m-%d"),
+            formatNumber = d3.format(",d"),
+            formatPercent = d3.format("+.1%");
+
+        var color = d3.scale.ordinal()
+            .range(["#ff8c00", "#98abc5", "#7b6888", "#6b486b", "#d0743c", "#ff8c00"]);
+
+        function monthPath(t0) {
+            var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
+                d0 = +day(t0),
+                w0 = +week(t0),
+                d1 = +day(t1),
+                w1 = +week(t1);
+            return "M" + (w0 + 1) * z + "," + d0 * z + "H" + w0 * z + "V" + 7 * z + "H" + w1 * z + "V" + (d1 + 1) * z + "H" + (w1 + 1) * z + "V" + 0 + "H" + (w0 + 1) * z + "Z";
+        }
+
+        // Chrome 15 bug: <http://code.google.com/p/chromium/issues/detail?id=98951>
+        var svg = d3.select("#graph").insert("div", "h2")
+            .style("position", "absolute")
+            .style("left", "-140px")
+            .style("width", "1280px")
+            .selectAll(".year")
+            .data(d3.range(2003, 2009))
+            .enter().append("div")
+            .attr("class", "year")
+            .style("width", w + m[1] + m[3] + "px")
+            .style("height", h + m[0] + m[2] + "px")
+            .append("svg:svg")
+            .attr("width", w + m[1] + m[3])
+            .attr("height", h + m[0] + m[2])
+            .append("svg:g")
+            .attr("transform", "translate(" + (m[3] + (w - z * 53) / 2) + "," + (m[0] + (h - z * 7) / 2) + ")");
+
+        svg.append("svg:text")
+            .attr("transform", "translate(-6," + z * 3.5 + ")rotate(-90)")
+            .attr("text-anchor", "middle")
+            .text(String);
+
+        var rect = svg.selectAll("rect.day")
+            .data(function (d) {
+                return d3.time.days(new Date(d, 0, 1), new Date(d + 1, 0, 1));
+            })
+            .enter().append("svg:rect")
+            .attr("class", "day")
+            .attr("width", z)
+            .attr("height", z)
+            .attr("x", function (d) {
+                return week(d) * z;
+            })
+            .attr("y", function (d) {
+                return day(d) * z;
+            });
+
+        rect.append("svg:title");
+
+        svg.selectAll("path.month")
+            .data(function (d) {
+                return d3.time.months(new Date(d, 0, 1), new Date(d + 1, 0, 1));
+            })
+            .enter().append("svg:path")
+            .attr("class", "month")
+            .attr("d", monthPath);
+
+        function plotCalendar(csv) {
+            var data = d3.nest()
+                .key(function (d) {
+                    return (d.Date = formatDate.parse(d.Date)).getFullYear();
+                })
+                .key(function (d) {
+                    return d.Date;
+                })
+                .rollup(function (d) {
+                    return +d[0].value;
+                })
+                .map(csv);
+
+
+            function legendData(csv) {
+                var map = {};
+                var rmap = {};
+
+                csv.forEach(function (d) {
+                    map[d.MayorCause] = d.value;
+                    rmap[d.value] = d.MayorCause;
+                })
+                return [map, rmap]; //, Object.keys(map)];
+            }
+            dlegend = legendData(csv)[0];
+            rlegend = legendData(csv)[1];
+
+            svg.each(function (year) {
+
+                d3.select(this).selectAll("rect.day")
+                    .style("fill", function (d) {
+                        return color(data[year][d]);
+                    })
+                    .attr("class", function (d) {
+                        return "day " + rlegend[data[year][d]];
+                    })
+                    .select("title")
+                    .style("fill", function (d) {
+                        return color(data[year][d]);
+                    })
+                    .text(function (d) {
+                        return formatDate(d) + ": " + rlegend[data[year][d]];
+                    });
+
+            });
+
+            //            var legend = d3.select("#legend").selectAll(".legend")
+            //                .data(Object.keys(dlegend))
+            //                .enter().append("g")
+            //                .attr("class", "legend")
+            //                .attr("transform", function (d, i) {
+            //                    return "translate( 0," + i * 20 + ")";
+            //                });
+            //
+            //            legend.append("rect")
+            //                .attr("x", w - 18)
+            //                .attr("width", 18)
+            //                .attr("height", 18)
+            //                .style("fill", function (d) {
+            //                    console.log("Legend" + color(dlegend[d]));
+            //                    return color(dlegend[d]);
+            //                });
+            //
+            //            legend.append("text")
+            //                .attr("x", w - 24)
+            //                .attr("y", 9)
+            //                .attr("dy", ".25em")
+            //                .style("text-anchor", "end")
+            //                .text(function (d) {
+            //                    return d;
+            //                });
+
+        };
+
+        d3.csv("data/04-Date_FlightsDelayCauses.csv", plotCalendar);
+    </script>
+</body>
+
+</html>

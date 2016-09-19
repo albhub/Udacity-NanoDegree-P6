@@ -1,0 +1,244 @@
+body {
+    font: 300 36px "Helvetica Neue";
+    height: 640px;
+    margin: 80px 160px 80px 160px;
+    overflow: hidden;
+    position: relative;
+    width: 960px;
+}
+
+a:link,
+a:visited {
+    color: #777;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #666;
+}
+
+blockquote {
+    font-size: 40px;
+    margin: 0;
+}
+
+blockquote:before {
+    content: "";
+    position: absolute;
+    left: -.4em;
+}
+
+blockquote:after {
+    content: "";
+    position: absolute;
+}
+
+body > ul {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 64px;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: inherit;
+    margin: 0;
+}
+
+h2,
+h3 {
+    text-align: right;
+    font-size: inherit;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+h2 {
+    font-size: 24px;
+    position: absolute;
+}
+
+h3 {
+    bottom: -20px;
+    font-size: 18px;
+}
+
+.invert {
+    background: #1f1f1f;
+    color: #dcdccc;
+}
+
+.invert h2,
+.invert h3 {
+    color: #7f9f7f;
+}
+
+.string,
+.regexp {
+    color: #f39;
+}
+
+
+
+.title {
+    color: #1f1f1f;
+    font-style: oblique;
+    font: 50px sans-serif;
+}
+
+.ptitle {
+    color: #777;
+    font-style: oblique;
+    font: 35px sans-serif;
+}
+
+.pptitle {
+    color: #777;
+    font-style: oblique;
+    font: 20px sans-serif;
+}
+
+.keyword {
+    color: #00c;
+}
+
+.comment {
+    color: #777;
+    font-style: oblique;
+}
+
+.legend {
+    font: inherit;
+    color: coral;
+    font-style: oblique;
+    font: 10px sans-serif;
+}
+
+.number {
+    color: #369;
+}
+
+.class,
+.special {
+    color: #1181B8;
+}
+
+body > svg {
+    position: absolute;
+    top: -80px;
+    left: -160px;
+}
+
+.bar {
+    fill: steelblue;
+}
+
+.bar:hover {
+    fill: darkcyan;
+}
+
+.axis {
+    font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.x.axis path {
+    display: none;
+}
+
+.d3-tip {
+    font-size: 14px;
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+}
+
+
+/* Creates a small triangle extender for the tooltip */
+
+.d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+}
+
+
+/* Style northward tooltips differently */
+
+.d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+}
+
+#graph {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.explanation {
+    font: inherit;
+    font-size: 18px;
+}
+
+.ppexplanation {
+    font: 25px sans-serif;
+}
+
+.clate {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #ff8c00;
+}
+
+.csecu {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #d0743c;
+}
+
+.cweat {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #7b6888;
+}
+
+.ccarr {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #98abc5;
+}
+
+.cnasx {
+     font-weight: bold;
+    font-size: 20px;
+    font: inherit;
+    color: #6b486b;
+}
