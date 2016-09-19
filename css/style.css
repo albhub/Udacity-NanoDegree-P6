@@ -83,8 +83,6 @@ h3 {
     color: #f39;
 }
 
-
-
 .title {
     color: #1f1f1f;
     font-style: oblique;
@@ -116,7 +114,7 @@ h3 {
     font: inherit;
     color: coral;
     font-style: oblique;
-    font: 10px sans-serif;
+    font: 14px sans-serif;
 }
 
 .number {
@@ -143,7 +141,7 @@ body > svg {
 }
 
 .axis {
-    font: 10px sans-serif;
+    font: 14px sans-serif;
 }
 
 .axis path,
@@ -157,12 +155,25 @@ body > svg {
     display: none;
 }
 
+.axis--x path {
+    display: none;
+}
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+
+/* Tips */
+
 .d3-tip {
     font-size: 14px;
     line-height: 1;
     font-weight: bold;
     padding: 12px;
-    background: rgba(0, 0, 0, 0.8);
+    background: #eee;
+    /*rgba(0, 0, 0, 0.8);*/
     color: #fff;
     border-radius: 2px;
 }
@@ -176,7 +187,8 @@ body > svg {
     font-size: 10px;
     width: 100%;
     line-height: 1;
-    color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    /*rgba(0.9, 0.9, 0.9, 0.9);*/
     content: "\25BC";
     position: absolute;
     text-align: center;
@@ -209,36 +221,60 @@ body > svg {
 }
 
 .clate {
-     font-weight: bold;
-    font-size: 20px;
+    font-weight: bold;
+    font-size: 18px;
     font: inherit;
     color: #ff8c00;
 }
 
 .csecu {
-     font-weight: bold;
-    font-size: 20px;
+    font-weight: bold;
+    font-size: 18px;
     font: inherit;
     color: #d0743c;
 }
 
 .cweat {
-     font-weight: bold;
-    font-size: 20px;
+    font-weight: bold;
+    font-size: 18px;
     font: inherit;
     color: #7b6888;
 }
 
 .ccarr {
-     font-weight: bold;
-    font-size: 20px;
+    font-weight: bold;
+    font-size: 18px;
     font: inherit;
     color: #98abc5;
 }
 
 .cnasx {
-     font-weight: bold;
-    font-size: 20px;
+    font-weight: bold;
+    font-size: 18px;
     font: inherit;
     color: #6b486b;
+}
+
+
+/* Calendar */
+
+.year {
+    display: inline-block;
+}
+
+svg {
+    font-size: 14px;
+    shape-rendering: crispEdges;
+}
+
+.day {
+    fill: #fff;
+    stroke: #000;
+    stroke-opacity: .1;
+}
+
+.month {
+    fill: none;
+    stroke: #000;
+    stroke-width: 2px;
 }
