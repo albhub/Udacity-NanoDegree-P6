@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <link type="text/css" rel="stylesheet" href="css/style_initial.css" />
 </head>
 
 <body>
@@ -12,20 +12,20 @@
       U.S. commercial flights, 2003-2008<br>
       Delay causes by year.
     </h2>
-
+    
     <div class="graph"> </div>
-
+    
     <blockquote style="font-size:28px;">
         <!--        From <number>2003</number> to <number>2008</number> the delay causes were reported:-->
         <p> The share of
             <font class="csecu"> security</font>,
             <font class="cweat"> weather</font> and
             <font class="ccarr"> carrier</font> delay causes have been (relatively) stable
-            </br>
-            The <font class="cnasx"> National Aviation System (NAS) </font> share have reduced, but the share of the delays by <font class="clate"> Late Aircraft</font> have increased ... </p>
+        </br>
+        The <font class="cnasx"> National Aviation System (NAS) </font> share have reduced, but the share of the delays by <font class="clate"> Late Aircraft</font> have increased ... </p>
     </blockquote>
 
-
+    
 
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
@@ -71,11 +71,11 @@
 
         var tip = d3.tip()
             .attr('class', 'd3-tip')
-            .offset([-3 * margin.bottom, -8-1 * (width + margin.left + margin.right) / 5])
+            .offset([-3 * margin.bottom, -1 * (width + margin.left + margin.right) / 5])
             //.offset([ -margin.bottom, -200 + ( width + margin.left + margin.right ) / 30])
             .html(function (d) {
                 //              debugger;
-                return "<span style='color:" + color(d.name) + "'> " + d.name + " " + parseFloat((d.value * 100)).toFixed(2) + " % </span>";
+                return "<span style='color:" + color(0) + "'> " + d.name + " " + parseFloat((d.value * 100)).toFixed(2) + " % </span>";
             })
 
         svg.call(tip);
@@ -107,12 +107,11 @@
 
             svg.append("g")
                 .attr("class", "x axis")
-                .attr("transform", "translate(15," + height + ")")
+                .attr("transform", "translate(0," + height + ")")
                 .call(xAxis);
 
             svg.append("g")
                 .attr("class", "y axis")
-                .attr("transform", "translate(0,0)")
                 .call(yAxis)
                 .append("text")
                 .attr("transform", "rotate(-90)")
@@ -126,7 +125,7 @@
                 .enter().append("g")
                 .attr("class", "year")
                 .attr("transform", function (d) {
-                    return "translate( " + (15+x0(d.Year)) + ",0)";
+                    return "translate(" + x0(d.Year) + ",0)";
                 });
 
             year.selectAll("rect")

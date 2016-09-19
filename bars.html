@@ -50,9 +50,9 @@
 
         var tip = d3.tip()
             .attr('class', 'd3-tip')
-            .offset([-margin.bottom, -margin.left - margin.right + width / 20])
+            .offset([10 - margin.bottom, -margin.left - margin.right + width / 20])
             .html(function (d) {
-                return "<strong> Year " + d.Year + "</strong>: <span style='color:darkcyan'>" + parseFloat((d.Value / 1000000)).toFixed(2) + " million flights </span>";
+                return "<strong style='color:grey'> Year " + d.Year + ":</strong> <span style='color:darkcyan'>" + parseFloat((d.Value / 1000000)).toFixed(2) + " million flights </span>";
             })
 
         svg.call(tip);
@@ -77,7 +77,8 @@
                 .attr("class", "y axis")
                 .call(yAxis)
                 .append("text")
-                .attr("transform", "rotate(-90)")
+                .attr("transform", "translate(10, -30)")
+                //.attr("transform", "rotate(-90)")
                 .attr("y", 6)
                 .attr("dy", ".91em")
                 .style("text-anchor", "end")

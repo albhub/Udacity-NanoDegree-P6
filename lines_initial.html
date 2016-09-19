@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <link type="text/css" rel="stylesheet" href="css/style_initial.css" />
     <style>
         .axis--x path {
             display: none;
@@ -23,18 +23,17 @@
       Delays improvement. Late Aircraft &amp; Total Delay.
     </h2>
     <p>
-        ... the improvemente in <font class="keyword">airlines</font> "on time" ratios  
-        is correlated with the reduction in their average
-        <font class="clate"> Late Aircraft</font> delay.
+        ... the <font class="keyword">airlines</font> that have reduced their
+        <font class="clate"> Late Aircraft</font> delays have improved their "on time" ratios.
     </p>
 
     <div class="pptitle" id="grapha" style="height: 220px; position: relative;">
         Late carrier delay:
-        <svg width="960" height="200px"></svg>
+        <svg width="960" height="180px"></svg>
     </div>
     <div class="pptitle" id="graphb" style="height: 220px; position: relative;">
         Total delay:
-        <svg width="960" height="200"></svg>
+        <svg width="960" height="180"></svg>
     </div>
 
 
@@ -83,7 +82,7 @@
         }
         //        d3.tsv("data.tsv", type, function (error, data) {
 
-        function plotAirline(error, data, g, texty) {
+        function plotAirline(error, data, g) {
             if (error) throw error;
 
             var airlines = data.columns.slice(1).map(function (id) {
@@ -132,7 +131,7 @@
                 .attr("y", 6)
                 .attr("dy", "0.71em")
                 .attr("fill", "#000")
-                .text(texty, "(rel year 2003)");
+                .text("Late aircraft delay", "(rel year 2003)");
 
             var airline = g.selectAll(".airline")
                 .data(airlines)
@@ -145,8 +144,7 @@
                     return line(d.values);
                 })
                 .style("stroke", function (d) {
-                    return z(d.id);
-                    //return "lightgrey"; //z(d.id);
+                    return "lightgrey"; //z(d.id);
                 })
                 .on("mouseover", function (d) {
                     d3.selectAll("#path-" + clstr(d.id))
@@ -179,7 +177,6 @@
                 });
 
             airline.append("text")
-                .attr("class", "line-text")
                 .datum(function (d) {
                     return {
                         id: d.id,
@@ -196,9 +193,9 @@
                     return d.id;
                 })
                 .style("fill", function (d) {
-                    return z(d.id);
+                    return "lightgrey";
                 })
-                .on("mouseover", function (d) {
+             .on("mouseover", function (d) {
                     d3.selectAll("#path-" + clstr(d.id))
                         .transition()
                         .duration(250)
@@ -229,37 +226,17 @@
                 });
 
         };
-
         d3.csv("data/05-DelayAircraftCarrier.csv", type,
             function (error, data) {
                 if (error) throw error;
-                plotAirline(error, data, g, "Late aircraft delay");
+                plotAirline(error, data, g);
             });
 
         d3.csv("data/06-DelayTotalCarrier.csv", type,
             function (error, data) {
                 if (error) throw error;
-                plotAirline(error, data, f, "Total aircraft delay");
+                plotAirline(error, data, f);
             });
-        
-        var t = d3.timer(function (elapsed) {
-            if (elapsed > 2001) {
-                console.log("DADA" + elapsed)
-                d3.selectAll(".line")
-                    .transition()
-                    .duration(750)
-                    .style("stroke-width", 1)
-                    .style("stroke", "lightgrey");
-
-                d3.selectAll(".line-text")
-                    .transition()
-                    .duration(750)
-                    .style("fill", "lightgrey")
-                    .style("font", "10px sans-serif");
-
-                t.stop();
-            }
-        }, 200);
 
         function type(d, _, columns) {
             d.date = parseTime(d.year);

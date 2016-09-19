@@ -3,14 +3,14 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <link type="text/css" rel="stylesheet" href="css/style_initial.css" />
 </head>
 
 <body>
     <blockquote style="font-size:30px;">
-        ... althought this increment the percentage of flights <span title="on or before schedule">"on time"</span> have increased, but in the <span title="from 2003 to 2008">last <color class="number">5</color> reported years </span>have dropped from a
-        <color class="number"> 62%</color> in 2003 to a
-        <color class="number"> 57%</color> in 2008.
+        ... althought this increment the percentage of flights <span title="on or before schedule">"on time"</span> have increased, 
+        but in the <span title="from 2003 to 2008">last <color class="number">5</color> reported years </span>have dropped 
+        from a <color class="number"> 62%</color> in 2003 to a <color class="number"> 57%</color> in 2008.
     </blockquote>
     <div class="graph"></div>
     <h2>
@@ -23,10 +23,10 @@
 
     <script>
         var margin = {
-                top: 100,
+                top: 20,
                 right: 100,
                 bottom: 100,
-                left: 100
+                left: 80
             },
             width = 960 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
@@ -54,11 +54,11 @@
 
         var tip = d3.tip()
             .attr('class', 'd3-tip')
-            .offset([10 - margin.bottom, -margin.left - margin.right + 1 * width / 21])
+            .offset([-margin.bottom, -margin.left-margin.right+0.5*width/21])
             .html(function (d) {
-                return "<strong style='color:grey'> Year " + d.Year + ":</strong> <span style='color:darkcyan'>" + parseFloat((d.Value * 100)).toFixed(2) + " % </span>";
+                return "<strong> Year " + d.Year +"</strong>: <span style='color:darkcyan'>" + parseFloat(Math.round(d.Value * 100)).toFixed(0) + "% </span>";
             })
-
+        
         svg.call(tip);
 
         d3.csv("data/02-Year_FlightsOnTime.csv", type, function (error, data) {
@@ -79,8 +79,7 @@
                 .attr("class", "y axis")
                 .call(yAxis)
                 .append("text")
-                .attr("transform", "translate(120, -40)")
-                //.attr("transform", "rotate(-90)")
+                .attr("transform", "rotate(-90)")
                 .attr("y", 6)
                 .attr("dy", ".91em")
                 .style("text-anchor", "end")

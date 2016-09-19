@@ -3,29 +3,50 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <link type="text/css" rel="stylesheet" href="css/style_initial.css" />
+    <style type="text/css">
+        .year {
+            display: inline-block;
+        }
+        
+        svg {
+            font-size: 14px;
+            shape-rendering: crispEdges;
+        }
+        
+        .day {
+            fill: #fff;
+            stroke: #000;
+            stroke-opacity: .1;
+        }
+        
+        .month {
+            fill: none;
+            stroke: #000;
+            stroke-width: 2px;
+        }
+    </style>
 </head>
 
 <body>
-    <blockquote style="font-size:28px;">
-        ... progressively the <font class="cnasx"> National Aviation System (NAS) </font> predominance (years 2003 and 2004) have transformed into a <font class="clate"> Late Aircraft</font> one (years 2007 and 2008), where <font class="ccarr">Carrier</font> is the third daily main cause:
+    <blockquote style="font-size:30px;">
+        ... progressively the <font class="cnasx"> National Aviation System (NAS) </font> predominance (2003-2004) have transformed into a <font class="clate"> Late Aircraft</font> one (2007-2008), where the <font class="ccarr"> Carrier </font> cause acts as the third one in importance (data available from June 2003):
     </blockquote>
-    <div id="graph" style="height: 340px; position: relative;">
-    </div>
-    <blockquote style="font-size:28px;position: relative;">
-        The Airlines could improve their "on time" ratio improving the <font class="ccarr"> Carrier</font>, and avoiding the <font class="clate"> Late-arriving Aircraft</font> ...
+    <div id="graph" style="height: 340px; position: relative;"></div>
+    <blockquote style="font-size:30px;position: relative;">
+        The Airlines could improve their "on time" ratio removing the intrinsic causes (<font class="ccarr"> Carrier </font>) and avoiding the <font class="clate"> Late-arriving Aircraft</font> ... 
     </blockquote>
     <h2>
       U.S. commercial flights, 2003-2008<br>
-      Main delay day by day. Data from June, 2003.
+      Main delay day by day.
     </h2>
 
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script type="text/javascript">
         var m = [19, 20, 20, 19], // top right bottom left margin
-            w = 580 - m[1] - m[3], // width
-            h = 90 - m[0] - m[2], // height
-            z = 10; // cell size
+            w = 620 - m[1] - m[3], // width
+            h = 100 - m[0] - m[2], // height
+            z = 11; // cell size
 
         var day = d3.time.format("%w"),
             week = d3.time.format("%U"),
@@ -35,8 +56,7 @@
             formatPercent = d3.format("+.1%");
 
         var color = d3.scale.ordinal()
-            .range(["#98abc5", "#7b6888", "#ff8c00"]);
-        //, "#7b6888", "#6b486b", "#d0743c", "#ff8c00"]);
+            .range(["#ff8c00", "#98abc5", "#7b6888", "#6b486b", "#d0743c", "#ff8c00"]);
 
         function monthPath(t0) {
             var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
@@ -107,6 +127,7 @@
                 })
                 .map(csv);
 
+
             function legendData(csv) {
                 var map = {};
                 var rmap = {};
@@ -121,11 +142,9 @@
             rlegend = legendData(csv)[1];
 
             svg.each(function (year) {
+
                 d3.select(this).selectAll("rect.day")
                     .style("fill", function (d) {
-                        console.log(year, d.getMonth());
-                        if (year == 2003 && d.getMonth() < 5)
-                            return "#fff";
                         return color(data[year][d]);
                     })
                     .attr("class", function (d) {
@@ -140,6 +159,32 @@
                     });
 
             });
+
+            //            var legend = d3.select("#legend").selectAll(".legend")
+            //                .data(Object.keys(dlegend))
+            //                .enter().append("g")
+            //                .attr("class", "legend")
+            //                .attr("transform", function (d, i) {
+            //                    return "translate( 0," + i * 20 + ")";
+            //                });
+            //
+            //            legend.append("rect")
+            //                .attr("x", w - 18)
+            //                .attr("width", 18)
+            //                .attr("height", 18)
+            //                .style("fill", function (d) {
+            //                    console.log("Legend" + color(dlegend[d]));
+            //                    return color(dlegend[d]);
+            //                });
+            //
+            //            legend.append("text")
+            //                .attr("x", w - 24)
+            //                .attr("y", 9)
+            //                .attr("dy", ".25em")
+            //                .style("text-anchor", "end")
+            //                .text(function (d) {
+            //                    return d;
+            //                });
 
         };
 
